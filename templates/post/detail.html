@@ -1,0 +1,24 @@
+{% extends "base.html" %} {% block body %}
+<div class="row">
+    <div class="col-md-6 col-md-offset-1">
+        <div class="thumbnail">
+            {% if post_det.image %}
+            <img src="{{ post_det.image.url }}" class="img-responsive"> {% endif %}
+            <div class="caption">
+                <h3>{{ post_det.title }}<small>{{ post.publishing_date }}</small></h3>
+                <h4>Müəllif---{{ post_det.user }}</h4>
+                <p>{{ post_det.content|safe|linebreaks }}</p>
+                <p>
+                    <a href="{{ post_det.get_update_url }}" class="btn btn-default" role="button">Düzəliş et</a>
+                    <a href="{{ post_det.get_delete_url }}" class="btn btn-danger" role="button">Sil</a>
+                </p>
+            </div>
+        </div>
+        <br>
+        <h4>Rəy bildir</h4><br> {% include "post/comment.html" %} {% for comment in post_det.comments.all %}
+        <h4>{{ comment.name }} | <small>{{ comment.created_date|timesince }} əvvəl </small></h4>
+        <p>{{ comment.content|linebreaks }}</p>
+        <hr>{% endfor %}
+    </div>
+</div>
+{% endblock%}
